@@ -142,3 +142,27 @@ def imprimir_contrato():
     print("Vehículo vendido exitosamente.")
     input("Presione una tecla para continuar...")
     os.system('cls')
+
+# Mostrar menú
+def main():
+    while True:
+        mostrar_menu()
+        opcion = input("Seleccione una opción: ")
+        if opcion == "1":
+            guardar_vehiculo()
+        elif opcion == "2":
+            buscar_vehiculo()
+        elif opcion == "3":
+            listar_vehiculos()
+        elif opcion == "4":
+            imprimir_contrato()
+        elif opcion == "5":
+            print("Saliendo de la aplicación...")
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione nuevamente.")
+            input("Presione una tecla para continuar...")
+            os.system('cls')
+
+if __name__ == "__main__":
+    main()
