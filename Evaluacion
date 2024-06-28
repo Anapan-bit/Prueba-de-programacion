@@ -54,3 +54,28 @@ def guardar_vehiculo():
     print("Vehículo guardado exitosamente.")
     input("Presione una tecla para continuar...")
     os.system('cls')
+
+# Buscar
+def buscar_vehiculo():
+    os.system('cls')
+    patente = input("Ingrese la patente del vehículo a buscar: ")
+    os.system('cls')
+    encontrado = False
+    
+    with open(FILENAME, mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            if row[0] == patente:
+                encontrado = True
+                año = int(row[3])
+                años_transcurridos = datetime.now().year - año
+                print(f"Patente: {row[0]}, Marca: {row[1]}, Modelo: {row[2]}, Año: {row[3]}, Valor: {row[4]}, ¿Vendido?: {row[5]}")
+                print(f"Años transcurridos desde fabricación: {años_transcurridos}")
+                input("Presione una tecla para continuar...")
+                os.system('cls')
+                break
+    
+    if not encontrado:
+        print("Vehículo no encontrado.")
+        input("Presione una tecla para continuar...")
+        os.system('cls')
