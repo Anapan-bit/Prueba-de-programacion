@@ -90,3 +90,55 @@ def listar_vehiculos():
             
         input("Presione una tecla para continuar...")
         os.system('cls')
+
+# Comprar vehiculo
+def imprimir_contrato():
+    os.system('cls')
+    patente = input("Ingrese la patente del vehículo a vender: ")
+    encontrado = False
+    vehiculos = []
+
+    with open(FILENAME, mode='r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            vehiculos.append(row)
+            if row[0] == patente and row[5] == "no":
+                encontrado = True
+                datos_vehiculo = row
+                break
+    
+    if not encontrado:
+        print("Vehículo no encontrado o ya vendido.")
+        input("Presione una tecla para continuar...")
+        os.system('cls')
+        return
+    
+    confirmar = input("¿Confirma la venta del vehículo? (si/no): ")
+    if confirmar.lower() != "si":
+        print("Venta cancelada.")
+        input("Presione una tecla para continuar...")
+        os.system('cls')
+        return
+    
+    # Generar número de contrato
+    numero_contrato = datetime.now().strftime("%Y%m%d%H%M%S")
+    
+    # Imprimir contrato
+    os.system('cls')
+    print("Contrato de Compraventa")
+    print(f"Número de contrato: {numero_contrato}")
+    print(f"Patente: {datos_vehiculo[0]}, Marca: {datos_vehiculo[1]}, Modelo: {datos_vehiculo[2]}, Año: {datos_vehiculo[3]}, Valor: {datos_vehiculo[4]}")
+    
+    # Actualizar el estado del vehículo a "vendido"
+    for vehiculo in vehiculos:
+        if vehiculo[0] == patente:
+            vehiculo[5] = "si"
+    
+    # Guardar cambios en el archivo CSV
+    with open(FILENAME, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(vehiculos)
+    
+    print("Vehículo vendido exitosamente.")
+    input("Presione una tecla para continuar...")
+    os.system('cls')
